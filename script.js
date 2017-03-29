@@ -15,7 +15,9 @@ var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "
     $("button").on("click", function() {
       // In this case, the "this" keyword refers to the button that was clicked
       var animal = $(this).attr("data-type");
-
+      // makes a variable for a div to hold all 10 gifs, prepends that to the div in the html
+      var bigGifDiv = ("<div id='giphys'>")
+      $("#gifs-appear-here").html(bigGifDiv);
       // Constructing a URL to search Giphy for the name of the person who said the quote
       var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
         animal + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -29,12 +31,12 @@ var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "
         .done(function(response) {
           // Storing an array of results in the results variable
           var results = response.data;
-
+         
           // Looping over every result item
           for (var i = 0; i < results.length; i++) {
             
               // Creating a div with the class "item"
-              var gifDiv = $("<div class='item'>");
+              var gifDiv = $("<div class='item col-md-6'>");
 
               // Storing the result item's rating
               var rating = results[i].rating;
@@ -53,9 +55,10 @@ var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "
               gifDiv.append(p);
               gifDiv.append(animalImage);
 
+
               // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
-        
-              $("#gifs-appear-here").prepend(gifDiv)
+
+              $("#giphys").prepend(gifDiv);
 
             
           }
