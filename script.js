@@ -8,6 +8,7 @@ var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "
       var buttonDiv = $("#buttons-appear-here");
       var buttons = $("<button>").text(animalArray[i]);
       buttons.attr("data-type", animalArray[i]);
+      buttons.attr("class", "btn-default");
       buttonDiv.append(buttons);
     }  
 
