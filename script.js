@@ -2,36 +2,49 @@
 
 // array of animals 
 var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "penguin", "bear", "bat" ]
- // for loop to make a button out of each animal, and add the data-type attribute of that animal
+
+// for loop to make a button out of each animal, and add the data-type attribute of that animal
   for (var i = 0; i < animalArray.length; i++) {
-      
       var buttonDiv = $("#buttons-appear-here");
       var buttons = $("<button>").text(animalArray[i]);
       buttons.attr("data-type", animalArray[i]);
-      buttons.attr("class", "btn-default");
+      buttons.attr("class", "btn-default important-buttons");
       buttonDiv.append(buttons);
     }  
 
-    // Event listener for all button elements
-    $("button").on("click", function() {
-      // In this case, the "this" keyword refers to the button that was clicked
-      var animal = $(this).attr("data-type");
-      // makes a variable for a div to hold all 10 gifs, prepends that to the div in the html
-      var bigGifDiv = ("<div id='giphys'>")
-      $("#gifs-appear-here").html(bigGifDiv);
-      // Constructing a URL to search Giphy for the name of the person who said the quote
-      var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-        animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+// button that captures the value from the input field - and pushes it to animalArray
+$("#submit-animal").on("click", function(){
+   event.preventDefault();
+      var newAnimal = $("#new-animal").val();
+      var buttonDiv = $("#buttons-appear-here");
+      var buttons = $("<button>").text(newAnimal);
+      buttons.attr("data-type", newAnimal);
+      buttons.attr("class", "btn-default important-buttons");
+      buttonDiv.append(buttons);  
+      $("#new-animal").val("");
+});
+ 
 
-      // Performing our AJAX GET request
-      $.ajax({
-          url: queryURL,
-          method: "GET"
-        })
-        // After the data comes back from the API
-        .done(function(response) {
-          // Storing an array of results in the results variable
-          var results = response.data;
+  // Event listener for all button elements in the body with class important buttons 
+  // (had to do it this way to effect dynamically created buttons)
+   $("body").on("click", "button.important-buttons", function() {
+  // In this case, the "this" keyword refers to the button that was clicked
+  var animal = $(this).attr("data-type");
+  // makes a variable for a div to hold all 10 gifs, prepends that to the div in the html
+   var bigGifDiv = ("<div id='giphys'>")
+  $("#gifs-appear-here").html(bigGifDiv);
+   // Constructing a URL to search Giphy for the animal
+   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+  // Performing our AJAX GET request
+  $.ajax({
+        url: queryURL,
+        method: "GET"
+     })
+      // After the data comes back from the API
+      .done(function(response) {
+      // Storing an array of results in the results variable
+      var results = response.data;
          
           // Looping over every result item
           for (var i = 0; i < results.length; i++) {
@@ -56,12 +69,11 @@ var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "
               gifDiv.append(p);
               gifDiv.append(animalImage);
 
-
               // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
-
               $("#giphys").prepend(gifDiv);
 
             
           }
         });
     });
+
