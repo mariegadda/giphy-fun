@@ -1,7 +1,7 @@
 
 
 // array of animals 
-var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "penguin", "bear", "bat" ]
+var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "penguin", "bear", "bat" ];
 
 // for loop to make a button out of each animal, and add the data-type attribute of that animal
   for (var i = 0; i < animalArray.length; i++) {
@@ -9,6 +9,7 @@ var animalArray=["cat", "dog", "mouse", "red panda", "bobcat", "owl", "panda", "
       var buttons = $("<button>").text(animalArray[i]);
       buttons.attr("data-type", animalArray[i]);
       buttons.attr("class", "btn-default important-buttons");
+      buttons.attr("data-state", "still");
       buttonDiv.append(buttons);
     }  
 
@@ -31,7 +32,7 @@ $("#submit-animal").on("click", function(){
   // In this case, the "this" keyword refers to the button that was clicked
   var animal = $(this).attr("data-type");
   // makes a variable for a div to hold all 10 gifs, prepends that to the div in the html
-   var bigGifDiv = ("<div id='giphys'>")
+   var bigGifDiv = ("<div id='giphys'>");
   $("#gifs-appear-here").html(bigGifDiv);
    // Constructing a URL to search Giphy for the animal
    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -76,4 +77,24 @@ $("#submit-animal").on("click", function(){
           }
         });
     });
+
+// on click funtion for gifs
+// switch back in forth between _s image urls to do still or animated
+// (had to do it this way to effect dynamically created buttons)
+   $("body").on("click", "img", function() {
+  
+  
+          var src = $(this).attr("src");
+          $(this).attr("src", src.replace(/200\.gif$/i, "200_s.gif"));
+       
+         }); 
+
+   // $("body").on("click", "img", function() {
+   //         var src = $(this).attr("src");
+   //        $(this).attr("src", src.replace(/200_s\.gif$/i, "200.gif"));
+   //   }); 
+
+
+
+
 
