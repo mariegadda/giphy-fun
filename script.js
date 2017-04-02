@@ -66,6 +66,9 @@ $("#submit-animal").on("click", function(){
               // result item
               animalImage.attr("src", results[i].images.fixed_height.url);
 
+              // attribute for it's animation stae
+              animalImage.attr("data-state", "animate");
+
               // Appending the paragraph and personImage we created to the "gifDiv" div we created
               gifDiv.append(p);
               gifDiv.append(animalImage);
@@ -82,17 +85,22 @@ $("#submit-animal").on("click", function(){
 // switch back in forth between _s image urls to do still or animated
 // (had to do it this way to effect dynamically created buttons)
    $("body").on("click", "img", function() {
-  
-  
-          var src = $(this).attr("src");
-          $(this).attr("src", src.replace(/200\.gif$/i, "200_s.gif"));
-       
-         }); 
 
-   // $("body").on("click", "img", function() {
-   //         var src = $(this).attr("src");
-   //        $(this).attr("src", src.replace(/200_s\.gif$/i, "200.gif"));
-   //   }); 
+          var state = $(this).attr("data-state");
+         if (state === "animate"){
+          var src = $(this).attr("src");
+
+          $(this).attr("src", src.replace(/200\.gif$/i, "200_s.gif"));
+          $(this).attr("data-state", "still");
+           }
+      else{
+
+         var src = $(this).attr("src");
+         $(this).attr("src", src.replace(/200_s\.gif$/i, "200.gif"));
+         $(this).attr("data-state", "animate");
+    }
+
+         }); 
 
 
 
