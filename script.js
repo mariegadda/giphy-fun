@@ -66,10 +66,10 @@ $("#submit-animal").on("click", function(){
               // result item
               animalImage.attr("src", results[i].images.fixed_height.url);
 
-              // attribute for it's animation stae
+              // attribute for it's animation state
               animalImage.attr("data-state", "animate");
 
-              // Appending the paragraph and personImage we created to the "gifDiv" div we created
+              // Appending the paragraph and animalImage we created to the "gifDiv" div we created
               gifDiv.append(p);
               gifDiv.append(animalImage);
 
